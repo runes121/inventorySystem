@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Desk Organizer",
+        "reviewDate": "02092025",
+        "stockNumber": 4
+    },
+    {
+        "name": "Frozen Chicken",
+        "reviewDate": "28082025",
+        "stockNumber": 7
+    },
+    {
+        "name": "Sticky Notes",
+        "reviewDate": "01092025",
+        "stockNumber": 2
+    },
+    {
+        "name": "Projector",
+        "reviewDate": "23092026",
+        "stockNumber": 0
+    },
+    {
+        "name": "Small Box",
+        "reviewDate": "30082026",
+        "stockNumber": 6
+    },
+    {
+        "name": "Cable Clips",
+        "reviewDate": "28082026",
+        "stockNumber": 5
+    },
+    {
+        "name": "Notebook Pack",
+        "reviewDate": "26082026",
+        "stockNumber": 5
+    },
+    {
+        "name": "Smart Light Bulb",
+        "reviewDate": "15122026",
+        "stockNumber": 9
+    },
+    {
+        "name": "Mouse",
+        "reviewDate": "17072026",
+        "stockNumber": 13
+    },
+    {
+        "name": "Misc. Wires",
+        "reviewDate": "05092025",
+        "stockNumber": 4
+    },
+    {
+        "name": "Stand",
+        "reviewDate": "30082027",
+        "stockNumber": 4
+    },
+    {
+        "name": "Monitor Stand",
+        "reviewDate": "26082026",
+        "stockNumber": 5
+    },
+    {
+        "name": "USB Hub",
+        "reviewDate": "28082026",
+        "stockNumber": 4
+    },
+    {
+        "name": "Office Chair",
+        "reviewDate": "15082025",
+        "stockNumber": 10
+    },
+    {
+        "name": "Keyboard",
+        "reviewDate": "17072028",
+        "stockNumber": 14
+    },
+    {
+        "name": "Paper Shredder",
+        "reviewDate": "30122028",
+        "stockNumber": 6
+    },
+    {
+        "name": "Desk Lamp",
+        "reviewDate": "01092025",
+        "stockNumber": 8
+    },
+    {
+        "name": "Broken Pen",
+        "reviewDate": "01012030",
+        "stockNumber": 0
+    },
+    {
+        "name": "Damaged Notebook",
+        "reviewDate": "15022030",
+        "stockNumber": 1
+    },
+    {
+        "name": "Expired Batteries",
+        "reviewDate": "01032030",
+        "stockNumber": 0
+    }
+]
