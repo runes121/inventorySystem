@@ -18,10 +18,21 @@ root.attributes('-fullscreen', True)
 with open("database.json", 'r') as f:
     inventory = json.load(f)
 
+searchContainer = tk.Frame(root, pady=10)
+searchContainer.pack()
+
+searchLabel = tk.Label(searchContainer, text="Search:")
+searchLabel.pack(side="left")
+
+entry_var = tk.StringVar()
+searchBar = tk.Entry(searchContainer, width=50, textvariable=entry_var)
+searchBar.pack(side="right")
+
 itemContainer = tk.Frame(root)
 itemContainer.pack()
 
 def renderInventory():
+    print("Rendering")
     """
     for label in itemContainer.winfo_children():
         label.destroy()
@@ -62,50 +73,96 @@ def renderInventory():
     totalStock = 0
 
     for i, item in enumerate(inventory):
-        print(item['name'])
-        totalStock += item['stockNumber']
-        date = datetime(int(item['reviewDate'][4:]), int(item['reviewDate'][2:4]), int(item['reviewDate'][0:2]))
-        nameCellBorder = tk.Frame(itemContainer, bg="black")
-        nameCellBorder.grid(column=1, row=i+2, sticky="nsew")
-        nameCell = tk.Label(nameCellBorder, text=item['name'], font=font.Font(size=12))
-        nameCell.pack(pady=2,padx=2, fill="both")
+        print(entry_var.get().strip().lower())
+        if len(entry_var.get().strip()) > 0  and entry_var.get().strip().lower() in item['name'].lower():
+            print(f"{item['name']} matches")
+            totalStock += item['stockNumber']
+            date = datetime(int(item['reviewDate'][4:]), int(item['reviewDate'][2:4]), int(item['reviewDate'][0:2]))
+            nameCellBorder = tk.Frame(itemContainer, bg="black")
+            nameCellBorder.grid(column=1, row=i+2, sticky="nsew")
+            nameCell = tk.Label(nameCellBorder, text=item['name'], font=font.Font(size=12))
+            nameCell.pack(pady=2,padx=2, fill="both")
 
-        reviewCellBorder = tk.Frame(itemContainer, bg="black")
-        reviewCellBorder.grid(column=2, row=i+2, sticky="nsew")
-        reviewCell = tk.Label(reviewCellBorder, text=f"{item['reviewDate'][0:2]}/{item['reviewDate'][2:4]}/{item['reviewDate'][4:]}", font=font.Font(size=12))
-        reviewCell.pack(pady=2, padx=2, fill="both")
+            reviewCellBorder = tk.Frame(itemContainer, bg="black")
+            reviewCellBorder.grid(column=2, row=i+2, sticky="nsew")
+            reviewCell = tk.Label(reviewCellBorder, text=f"{item['reviewDate'][0:2]}/{item['reviewDate'][2:4]}/{item['reviewDate'][4:]}", font=font.Font(size=12))
+            reviewCell.pack(pady=2, padx=2, fill="both")
 
-        stockNumCellBorder = tk.Frame(itemContainer, bg="black")
-        stockNumCellBorder.grid(column=3, row=i+2, sticky="nsew")
-        stockNumCell = tk.Label(stockNumCellBorder, text=str(item['stockNumber']), font=font.Font(size=12))
-        stockNumCell.pack(pady=2, padx=2, fill="both")
+            stockNumCellBorder = tk.Frame(itemContainer, bg="black")
+            stockNumCellBorder.grid(column=3, row=i+2, sticky="nsew")
+            stockNumCell = tk.Label(stockNumCellBorder, text=str(item['stockNumber']), font=font.Font(size=12))
+            stockNumCell.pack(pady=2, padx=2, fill="both")
 
-        def plusOne(itemName):
-            for item in inventory:
-                if item['name'] == itemName:
-                    item['stockNumber'] += 1
-                    break
-            renderInventory()
-        def minusOne(itemName):
-            for item in inventory:
-                if item['name'] == itemName:
-                    item['stockNumber'] -= 1
-                    break
-            renderInventory()
+            def plusOne(itemName):
+                for item in inventory:
+                    if item['name'] == itemName:
+                        item['stockNumber'] += 1
+                        break
+                renderInventory()
+            def minusOne(itemName):
+                for item in inventory:
+                    if item['name'] == itemName:
+                        item['stockNumber'] -= 1
+                        break
+                renderInventory()
 
-        plusOneBtn = tk.Button(itemContainer, text="+1", command=lambda itemName=item['name']: plusOne(itemName))
-        plusOneBtn.grid(column=4, row=i+2, sticky="nsew")
-        minusOneBtn = tk.Button(itemContainer, text="-1", command=lambda itemName=item['name']: minusOne(itemName))
-        minusOneBtn.grid(column=5, row=i+2, sticky="nsew")
+            plusOneBtn = tk.Button(itemContainer, text="+1", command=lambda itemName=item['name']: plusOne(itemName))
+            plusOneBtn.grid(column=4, row=i+2, sticky="nsew")
+            minusOneBtn = tk.Button(itemContainer, text="-1", command=lambda itemName=item['name']: minusOne(itemName))
+            minusOneBtn.grid(column=5, row=i+2, sticky="nsew")
 
-        if (date - datetime.now()).days < 7:
-            nameCell.config(bg="orange")
-            reviewCell.config(bg="orange")
-            stockNumCell.config(bg="orange")
-        if item['stockNumber'] < 2:
-            nameCell.config(bg="red")
-            reviewCell.config(bg="red")
-            stockNumCell.config(bg="red")
+            if (date - datetime.now()).days < 7:
+                nameCell.config(bg="orange")
+                reviewCell.config(bg="orange")
+                stockNumCell.config(bg="orange")
+            if item['stockNumber'] < 2:
+                nameCell.config(bg="red")
+                reviewCell.config(bg="red")
+                stockNumCell.config(bg="red")
+        elif len(entry_var.get().strip()) == 0:
+            totalStock += item['stockNumber']
+            date = datetime(int(item['reviewDate'][4:]), int(item['reviewDate'][2:4]), int(item['reviewDate'][0:2]))
+            nameCellBorder = tk.Frame(itemContainer, bg="black")
+            nameCellBorder.grid(column=1, row=i+2, sticky="nsew")
+            nameCell = tk.Label(nameCellBorder, text=item['name'], font=font.Font(size=12))
+            nameCell.pack(pady=2,padx=2, fill="both")
+
+            reviewCellBorder = tk.Frame(itemContainer, bg="black")
+            reviewCellBorder.grid(column=2, row=i+2, sticky="nsew")
+            reviewCell = tk.Label(reviewCellBorder, text=f"{item['reviewDate'][0:2]}/{item['reviewDate'][2:4]}/{item['reviewDate'][4:]}", font=font.Font(size=12))
+            reviewCell.pack(pady=2, padx=2, fill="both")
+
+            stockNumCellBorder = tk.Frame(itemContainer, bg="black")
+            stockNumCellBorder.grid(column=3, row=i+2, sticky="nsew")
+            stockNumCell = tk.Label(stockNumCellBorder, text=str(item['stockNumber']), font=font.Font(size=12))
+            stockNumCell.pack(pady=2, padx=2, fill="both")
+
+            def plusOne(itemName):
+                for item in inventory:
+                    if item['name'] == itemName:
+                        item['stockNumber'] += 1
+                        break
+                renderInventory()
+            def minusOne(itemName):
+                for item in inventory:
+                    if item['name'] == itemName:
+                        item['stockNumber'] -= 1
+                        break
+                renderInventory()
+
+            plusOneBtn = tk.Button(itemContainer, text="+1", command=lambda itemName=item['name']: plusOne(itemName))
+            plusOneBtn.grid(column=4, row=i+2, sticky="nsew")
+            minusOneBtn = tk.Button(itemContainer, text="-1", command=lambda itemName=item['name']: minusOne(itemName))
+            minusOneBtn.grid(column=5, row=i+2, sticky="nsew")
+
+            if (date - datetime.now()).days < 7:
+                nameCell.config(bg="orange")
+                reviewCell.config(bg="orange")
+                stockNumCell.config(bg="orange")
+            if item['stockNumber'] < 2:
+                nameCell.config(bg="red")
+                reviewCell.config(bg="red")
+                stockNumCell.config(bg="red")
     
     totalStockLabelFrame = tk.Frame(itemContainer, bg="black")
     totalStockLabelFrame.grid(column=1,row=i+len(inventory), columnspan=2, sticky="nsew")
@@ -117,6 +174,7 @@ def renderInventory():
     totalStockText = tk.Label(totalStockTextFrame, text=str(totalStock), font=font.Font(weight="bold", size=12))
     totalStockText.pack(fill="both", pady=2, padx=2)
 
+entry_var.trace_add('write', lambda *args: renderInventory())
 
 renderInventory()
 
